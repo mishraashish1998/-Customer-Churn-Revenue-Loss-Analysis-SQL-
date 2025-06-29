@@ -1,4 +1,4 @@
-# 📊 Customer Churn & Revenue Loss Analysis (SQL + PostgreSQL)
+# 📊 Customer Churn & Revenue Loss Analysis 
 
 This project analyzes customer churn behavior and its financial impact using real-world style SQL queries. It simulates how a company like **StreamFlow**, a SaaS-based subscription business, can use data to identify churn patterns and drive retention strategies.
 
