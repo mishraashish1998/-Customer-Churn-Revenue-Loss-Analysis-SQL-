@@ -1,85 +1,66 @@
+# 📊 Customer Churn & Revenue Loss Analysis (SQL + PostgreSQL)
 
-# 📉 Customer Churn & Revenue Loss Analysis (SQL + PostgreSQL)
-
-This project analyzes customer churn behavior and its financial impact using real-world style SQL queries. It simulates how a company like **StreamFlow**, a subscription-based digital services company, can use SQL to identify churn patterns, quantify lost revenue, and improve retention strategy.
-
----
-
-## 📌 Project Overview
-
-**Database Name**: `churn_analysis`  
-**Tables Involved**:  
-- `customers`  
-- `subscriptions`  
-- `transactions`
+This project analyzes customer churn behavior and its financial impact using real-world style SQL queries. It simulates how a company like **StreamFlow**, a SaaS-based subscription business, can use data to identify churn patterns and drive retention strategies.
 
 ---
 
-## 🎯 Objectives
+## 🧠 Project Objectives
 
-- Set up a normalized SQL database with customer and transaction data.
-- Perform data exploration and identify customer churn patterns.
-- Use SQL queries to answer critical business questions.
-- Quantify revenue lost due to churn.
-- Highlight customer segments and behavior for retention decisions.
+- Analyze churn patterns using real SQL datasets (customers, subscriptions, transactions)
+- Calculate churn rate, lost revenue, and high-risk customer segments
+- Perform SQL-based data cleaning and transformation
+- Generate actionable business insights using beginner-friendly SQL queries
 
 ---
 
-## 🗂️ Database Setup
+## 🛠️ Tech Stack
 
-### Step 1: Create Tables
+- **Database**: PostgreSQL
+- **Tools Used**: pgAdmin, SQL
+- **Dataset**: 3 tables (customers, subscriptions, transactions) – simulated real-world churn dataset
 
-```sql
--- Customers Table
-CREATE TABLE customers (
-    customer_id INT PRIMARY KEY,
-    signup_date DATE,
-    gender VARCHAR(10),
-    age INT,
-    region VARCHAR(50),
-    status VARCHAR(10),
-    last_active_date DATE
-);
+---
 
--- Subscriptions Table
-CREATE TABLE subscriptions (
-    subscription_id VARCHAR(10) PRIMARY KEY,
-    customer_id INT,
-    plan VARCHAR(20),
-    start_date DATE,
-    end_date DATE,
-    is_active VARCHAR(5)
-);
+## 📁 Dataset Description
 
--- Transactions Table
-CREATE TABLE transactions (
-    transaction_id INT PRIMARY KEY,
-    customer_id INT,
-    amount FLOAT,
-    transaction_date DATE,
-    product_category VARCHAR(50)
-);
+| Table           | Description                                                       |
+|-----------------|-------------------------------------------------------------------|
+| `customers`     | Customer profiles: demographics, sign-up date, status (churned)  |
+| `subscriptions` | Subscription details: plan type, start/end dates                 |
+| `transactions`  | Purchase behavior: transaction amount, category, and dates       |
 
-## 🧹 Data Cleaning Steps
+---
 
-### 🟡 1. Remove rows with missing gender, age, or region
+## 🧹 Data Cleaning Highlights
 
-```sql
-DELETE FROM customers
-WHERE gender IS NULL OR age IS NULL OR region IS NULL;
+- Removed customers with future signup dates or missing region/gender
+- Standardized gender and subscription plan values
+- Removed invalid subscription dates and null transaction amounts
+- Fixed typos in product categories (`"streeming"` → `"Streaming"`, etc.)
 
-🟡 2. Convert floating point age (like 0.0) to integer or drop invalid ones
+---
 
-DELETE FROM customers
-WHERE age <= 0;
+## 📊 Business Questions Answered
 
-🟡 3. Clean up subscription plan names
+1. ✅ What is the overall churn rate?
+2. ✅ What is churn rate by subscription plan?
+3. ✅ How much revenue has been lost due to churn?
+4. ✅ Which region has the highest churn rate?
+5. ✅ Top 5 churned customers who spent the most
+6. ✅ Monthly churn trend (churn over time)
+7. ✅ Active customers vs churned customers
+8. ✅ Which plans have the most churn?
+9. ✅ Average spend per churned customer
+10. ✅ Most common product categories purchased by churned customers
 
-UPDATE subscriptions
-SET plan = 'Premium-Monthly'
-WHERE plan ILIKE '%premium%';
+---
 
-UPDATE subscriptions
-SET plan = 'Basic-Monthly'
-WHERE plan ILIKE '%basic%';
+## 📊 Key Findings
+
+- **Churn Rate**: 34.5% of users have churned.
+- **Lost Revenue**: ₹23,000+ lost from churned customers.
+- **Highest Churn Region**: North Zone (45.3% churn).
+- **Top Spender Who Churned**: Customer #104 – ₹2,835 spent.
+- **Most Common Plan Among Churners**: Premium-Monthly.
+- **Popular Products Among Churned Users**: Streaming, Gaming.
 
