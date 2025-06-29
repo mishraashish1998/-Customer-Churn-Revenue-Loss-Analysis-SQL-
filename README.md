@@ -59,3 +59,14 @@ CREATE TABLE transactions (
     transaction_date DATE,
     product_category VARCHAR(50)
 );
+
+## 🗂️ Data Cleaning Steps
+### 1. Remove rows with missing gender, age, or region
+```sql
+DELETE FROM customers
+WHERE gender IS NULL OR age IS NULL OR region IS NULL;
+### 2. Convert floating point age (like 0.0) to integer or drop invalid ones
+```sql
+DELETE FROM customers
+WHERE age <= 0;
+
